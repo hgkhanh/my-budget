@@ -1,24 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState, useEffect} from 'react';
-import {Deploy} from './Component/Deploy/Deploy';
+import {Dashboard} from './Component/Dashboard/Dashboard';
 
 function App() {
-  const [state, setState] = useState({})
+  const [yearData, setYearData] = useState({})
 
   useEffect(() => {
-    fetch("/api").then(response => {
-      if(response.status == 200){
+    fetch("/api/year").then(response => {
+      if(response.status === 200){
         return response.json()
       }
-    }).then(data => setState(data))
-    .then(error => console.log(error))
+    }).then(data => setYearData(data))
+    .catch(error => console.log(error))
   },[])
 
   return (
     <div className="App">
       asdf
-      <Deploy prop={state}/>
+      <Dashboard yearData={yearData}/>
     </div>
   );
 }
