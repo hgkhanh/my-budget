@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState, useEffect} from 'react';
-import {Dashboard} from './Component/Dashboard/Dashboard';
+import {Year} from './Component/Year/Year';
 
 function App() {
   const [yearData, setYearData] = useState({})
@@ -17,8 +17,7 @@ function App() {
 
   return (
     <div className="App">
-      asdf
-      <Dashboard yearData={yearData}/>
+      <Year yearData={yearData}/>
     </div>
   );
 }

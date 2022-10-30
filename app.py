@@ -1,8 +1,8 @@
-from flask import Flask, Response, jsonify
+from flask import Flask, jsonify, request
 from flask.helpers import send_from_directory
 from flask_cors import CORS, cross_origin
 
-from api import year
+from api import year, month
 
 app = Flask(__name__, static_folder='client/build', static_url_path='')
 CORS(app)
@@ -10,9 +10,15 @@ CORS(app)
 
 @app.route('/api/year', methods=['GET'])
 @cross_origin()
-def index():
-    print(year.total())
+def year_index():
     return jsonify(year.total())
+
+
+@app.route('/api/month', methods=['GET'])
+@cross_origin()
+def month_index():
+    date = request.args.get('date', type=str)
+    return jsonify(month.get_by_month(date))
 
 
 @app.route('/')

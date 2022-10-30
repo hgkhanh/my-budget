@@ -1,7 +1,15 @@
 ## Flask + React + Heroku
 
-🚀
 
-## Hosted App Link
 
-[Live](https://obscure-anchorage-12854.herokuapp.com/)
+## Getting started
+./
+```
+pipenv shell
+python app.py
+```
+./client
+```
+yarn start
+```
+
