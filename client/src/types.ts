@@ -3,7 +3,7 @@ export interface YearAPIResponse {
   year: PeriodOverview
 }
 
-interface PeriodOverview {
+export interface PeriodOverview {
   cash_flow: number;
   expense: number;
   income: number;

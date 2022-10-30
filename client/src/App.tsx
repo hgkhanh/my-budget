@@ -1,23 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
-import {Year} from "./components/Year/Year";
-import {YearAPIResponse} from "./types";
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import Year from "./components/Year";
+import Month from "./components/Month";
 
 function App() {
-  const [yearData, setYearData] = useState<YearAPIResponse>();
-
-  useEffect(() => {
-    fetch("/api/year").then(response => {
-      if(response.status === 200){
-        return response.json()
-      }
-    }).then(data => setYearData(data))
-      .catch(error => console.log(error))
-  },[])
-
   return (
     <div className="App">
-      {yearData && <Year yearData={yearData}/>}
+      <Router>
+        <div className="list">
+          <ul>
+            <li><Link to="/">Month</Link></li>
+            <li><Link to="year">Year</Link></li>
+          </ul>
+        </div>
+        <Routes>
+          <Route path="/" element={<Month/>}/>
+          <Route path="/year" element={<Year/>}/>
+        </Routes>
+      </Router>
     </div>
   );
 }
