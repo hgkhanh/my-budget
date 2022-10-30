@@ -1,10 +1,10 @@
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
-import {useState, useEffect} from 'react';
-import {Year} from './Component/Year/Year';
+import {Year} from "./components/Year/Year";
+import {YearAPIResponse} from "./types";
 
 function App() {
-  const [yearData, setYearData] = useState({})
+  const [yearData, setYearData] = useState<YearAPIResponse>();
 
   useEffect(() => {
     fetch("/api/year").then(response => {
@@ -12,12 +12,12 @@ function App() {
         return response.json()
       }
     }).then(data => setYearData(data))
-    .catch(error => console.log(error))
+      .catch(error => console.log(error))
   },[])
 
   return (
     <div className="App">
-      <Year yearData={yearData}/>
+      {yearData && <Year yearData={yearData}/>}
     </div>
   );
 }

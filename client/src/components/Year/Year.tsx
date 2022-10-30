@@ -1,8 +1,12 @@
 import React from 'react';
 
 import {Container, Grid} from "@mui/material";
+import {YearAPIResponse} from "../../types";
 
- export const Year = ({ yearData }) => {
+interface YearProps {
+  yearData: YearAPIResponse;
+}
+ export const Year = ({ yearData } : YearProps) => {
      if (yearData && yearData.year) {
          return (
              <Container fixed>
