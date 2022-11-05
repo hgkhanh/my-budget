@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask.helpers import send_from_directory
 from flask_cors import CORS, cross_origin
 
-from api import year, month
+from backend import year, month
 
 app = Flask(__name__, static_folder='client/build', static_url_path='')
 CORS(app)

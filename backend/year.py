@@ -1,6 +1,5 @@
+from backend import month
 import database as db
-
-from api import month
 
 
 def total():

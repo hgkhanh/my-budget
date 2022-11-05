@@ -1,4 +1,6 @@
 import database as db
+from backend import utils
+import constants as const
 
 
 def get_by_month(date):
@@ -18,10 +20,19 @@ def get_by_month(date):
     month_expense = int(df_expense["amount"].sum(numeric_only=True))
     month_cash_flow = month_income - month_expense
 
+    # 50-30-20
+    expense_by_category = utils.group_by_category(df_expense)
+    need_to_have_expense = expense_by_category.filter(items=const.need_to_have_categories, axis=0)
+    nice_to_have_expense = expense_by_category.filter(items=const.nice_to_have_categories, axis=0)
+
+
     return {
         "income": month_income,
         "expense": month_expense,
         "cash_flow": month_cash_flow,
+        "need_to_have": int(need_to_have_expense.sum()),
+        "nice_to_have": int(nice_to_have_expense.sum()),
+        "categories": expense_by_category.reset_index().to_dict(orient='records'),
     }
 
 
