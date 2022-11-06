@@ -38,8 +38,6 @@ const Month = () => {
           </>
         )
       }
-
-
     </Container>
   )
 
