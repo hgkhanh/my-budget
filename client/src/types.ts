@@ -1,9 +1,11 @@
 export interface YearAPIResponse {
   monthly_avg: PeriodOverview;
   year: PeriodOverview
+  months: PeriodOverview[];
 }
 
 export interface PeriodOverview {
+  date: string;
   cash_flow: number;
   expense: number;
   income: number;

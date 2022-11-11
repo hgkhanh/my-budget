@@ -3,6 +3,7 @@ import React from 'react';
 import {Grid} from "@mui/material";
 import {PeriodOverview} from "../../../../types";
 import {isEmpty} from 'lodash/fp';
+import Amount from "components/Amount";
 
 interface OverviewProps {
   data: PeriodOverview;
@@ -17,28 +18,28 @@ const Overview = ({data}: OverviewProps) => {
       <>
         <h2>Overview</h2>
         <Grid container spacing={0} justifyContent="center">
-          <Grid item xs={2}>
+          <Grid item xs={4} sm={2}>
             <h3>Income</h3>
-            <p>{income}</p>
+            <p><Amount amount={income}/></p>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={4} sm={2}>
             <h3>Expense</h3>
-            <p>{expense}</p>
+            <p><Amount amount={-expense}/></p>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={4} sm={2}>
             <h3>Cash Flow</h3>
-            <p>{cash_flow}</p>
+            <p><Amount amount={cash_flow}/></p>
           </Grid>
         </Grid>
         <Grid container spacing={0} justifyContent="center">
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <h3>Need-to-have</h3>
-            <p>{need_to_have}</p>
+            <p><Amount amount={need_to_have}/></p>
             <p>{`${need_to_have_percentage}%`}</p>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <h3>Nice-to-have</h3>
-            <p>{nice_to_have}</p>
+            <p><Amount amount={nice_to_have}/></p>
             <p>{`${nice_to_have_percentage}%`}</p>
           </Grid>
         </Grid>

@@ -11,12 +11,12 @@ import {
   red,
   grey
 } from '@mui/material/colors';
-interface CategoryConfigInterface {
+interface CategoryConfig {
   [key: string]: {
     color: string;
   }
 }
-export const CATEGORY_CONFIG: CategoryConfigInterface = {
+export const CATEGORY_CONFIG: CategoryConfig = {
   "Rents & Utilities": {
     color: brown['A400']
   },

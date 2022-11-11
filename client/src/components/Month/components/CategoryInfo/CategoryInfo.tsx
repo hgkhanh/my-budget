@@ -1,5 +1,5 @@
 import React from 'react';
-import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
+import {Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions} from 'chart.js';
 import {Doughnut} from 'react-chartjs-2';
 import {Grid, Typography} from "@mui/material";
 
@@ -15,7 +15,6 @@ interface CategoryInfoProps {
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const CategoryInfo = ({categories}: CategoryInfoProps) => {
-
   if (categories.length > 0) {
     const sortedByAmountList = categories.sort(function (a, b) {
       return b.amount - a.amount;
@@ -30,24 +29,38 @@ const CategoryInfo = ({categories}: CategoryInfoProps) => {
         },
       ],
     };
+    const options: ChartOptions = {
+      plugins: {
+        legend: {
+          display: true,
+          position: 'right',
+          labels: {
+            font: {
+              size: window.innerWidth > 350 ? 10 : 5
+            },
+            boxWidth: 10
+          }
+        }
+      }
+    }
     return (
       <>
         <h2>Categories</h2>
         <Grid container spacing={0} justifyContent="space-evenly">
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             {sortedByAmountList.map(({category, amount}) => (
               <Grid container justifyContent="space-evenly">
-                <Grid item xs={4}>
+                <Grid item xs={6} sm={4}>
                   <Typography align="left">{category}</Typography>
-                </Grid>q
-                <Grid item xs={1}>
+                </Grid>
+                <Grid item xs={6} sm={1}>
                   <Typography align="right">{amount}</Typography>
                 </Grid>
               </Grid>
             ))}
           </Grid>
-          <Grid item xs={4}>
-            <Doughnut data={data}/>
+          <Grid item xs={12} sm={4}>
+            <Doughnut data={data} options={options}/>
           </Grid>
         </Grid>
       </>

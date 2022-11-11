@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
-
+import moment from "moment";
 import {Container, Grid} from "@mui/material";
-import {YearAPIResponse} from "../../types";
+
+import {YearAPIResponse} from "types";
+import MonthlyBarChart from "components/Year/components/MonthlyBarChart";
 
 const Year = () => {
-
+  const [date, setDate] = useState(moment().set({'date': 1}).subtract(1, 'month'));
   const [yearData, setYearData] = useState<YearAPIResponse>();
   useEffect(() => {
-    fetch("/api/year").then(response => {
+    fetch(`/api/year/${date.year()}`).then(response => {
       if (response.status === 200) {
         return response.json()
       }
@@ -33,7 +35,7 @@ const Year = () => {
             <p>{yearData.year.cash_flow}</p>
           </Grid>
         </Grid>
-        {JSON.stringify(yearData)}
+        <MonthlyBarChart yearData={yearData}/>
       </Container>
     )
   }

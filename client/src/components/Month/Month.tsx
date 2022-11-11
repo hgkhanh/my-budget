@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 
-import {Container, Grid, Button} from "@mui/material";
-import {PeriodOverview} from "../../types";
+import {Container, Button} from "@mui/material";
+import {PeriodOverview} from "types";
 import moment from "moment";
-import {isEmpty} from 'lodash/fp';
 import Overview from "./components/Overview/Overview";
 import CategoryInfo from "./components/CategoryInfo/CategoryInfo";
 
@@ -13,7 +12,7 @@ const Month = () => {
 
   useEffect(() => {
     if (date) {
-      fetch(`/api/month?date=${date.format('YYYY-MM-DD')}`).then(response => {
+      fetch(`/api/month/${date.format('YYYY-MM-DD')}`).then(response => {
         if (response.status === 200) {
           return response.json()
         }
