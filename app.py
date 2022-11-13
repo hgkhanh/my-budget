@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 from flask.helpers import send_from_directory
 from flask_cors import CORS, cross_origin
 
@@ -21,6 +21,7 @@ def month_index(date_input):
 
 
 @app.route('/')
+@cross_origin()
 def serve():
     return send_from_directory(app.static_folder, 'index.html')
 

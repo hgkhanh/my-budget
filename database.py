@@ -1,10 +1,12 @@
 import os
 from deta import Deta
-from dotenv import load_dotenv
 import pandas as pd
 
 # Load env
-load_dotenv(".env")
+if not os.environ.get('production'):
+    from dotenv import load_dotenv
+    load_dotenv(".env")
+
 DETA_KEY = os.getenv("DETA_KEY")
 DETA_BASE = os.getenv("DETA_BASE")
 
