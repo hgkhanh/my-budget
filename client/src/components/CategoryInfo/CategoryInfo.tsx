@@ -56,7 +56,7 @@ const CategoryInfo = ({categories}: CategoryInfoProps) => {
                 <Grid item xs={6} sm={4}>
                   <Typography align="left">{category}</Typography>
                 </Grid>
-                <Grid item xs={6} sm={1}>
+                <Grid item xs={6} sm={2}>
                   <Typography align="right"><Amount amount={-amount}/></Typography>
                 </Grid>
               </Grid>
