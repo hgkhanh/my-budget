@@ -1,7 +1,7 @@
 {
   "name": "my-budget",
   "version": "0.1.0",
-  "proxy": "https://main--astonishing-gingersnap-7b0392.netlify.app/",
+  "proxy": "https://stark-atoll-51692.herokuapp.com/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
