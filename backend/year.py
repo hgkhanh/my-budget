@@ -1,16 +1,17 @@
+import pandas as pd
+
 from backend import month
 import database as db
+import constants as const
+from backend import utils
 
 
-def total():
-    # TEST
-    THIS_YEAR = 2022
-
+def get_by_year(year_input):
     df = db.fetch_all()
+    df["year"] = pd.to_datetime(df["date"]).dt.year
     df_year_selection = df.query(
-        'year == 2022'
+        'year == @year_input'
     )
-
     # All months
     expense_by_year = df.query(
         "transfer_type == 'expense'"
@@ -37,18 +38,29 @@ def total():
 
     # Monthly avg
     monthly_avg = month.get_monthly_avg(df_year_selection)
-    print(f'year_income {year_income}')
-    print(f'year_expense {year_expense}')
+
+    # All months overview
+    month_list = map(lambda month: str(year_input) + month, const.months)
+    monthly_overview = map(lambda date: month.get_by_month(date), list(month_list))
+
+    # 50-30-20
+    expense_by_category = utils.group_by_category(df_selection_expense)
+    need_to_have_expense = expense_by_category.filter(items=const.need_to_have_categories, axis=0)
+    nice_to_have_expense = expense_by_category.filter(items=const.nice_to_have_categories, axis=0)
 
     return {
         "year": {
             "income": year_income,
             "expense": year_expense,
             "cash_flow": year_cash_flow,
+            "need_to_have": int(need_to_have_expense.sum()),
+            "nice_to_have": int(nice_to_have_expense.sum()),
+            "categories": expense_by_category.reset_index().to_dict(orient='records'),
         },
         "monthly_avg": {
             "income": monthly_avg["income"],
             "expense": monthly_avg["expense"],
             "cash_flow": int(monthly_avg["income"] - monthly_avg["expense"]),
-        }
+        },
+        "months": list(monthly_overview)
     }

@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from 'react';
 
-import {Container, Button} from "@mui/material";
+import {Container, Button, BottomNavigation, BottomNavigationAction, Paper} from "@mui/material";
+import RestoreIcon from '@mui/icons-material/Restore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import {PeriodOverview} from "types";
 import moment from "moment";
-import Overview from "./components/Overview/Overview";
-import CategoryInfo from "./components/CategoryInfo/CategoryInfo";
+import Overview from "../Overview/Overview";
+import CategoryInfo from "../CategoryInfo/CategoryInfo";
+import {Link, useLocation} from "react-router-dom";
 
 const Month = () => {
   const [data, setData] = useState<PeriodOverview>();
   const [date, setDate] = useState(moment().set({'date': 1}).subtract(1, 'month'));
+  const location = useLocation();
 
   useEffect(() => {
     if (date) {
@@ -37,6 +41,26 @@ const Month = () => {
           </>
         )
       }
+
+      <Paper sx={{position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={3}>
+        <BottomNavigation
+          showLabels value={location.pathname}>
+          <BottomNavigationAction
+            component={Link}
+            to="/year"
+            label="Year"
+            value="/year"
+            icon={<RestoreIcon/>}
+          />
+          <BottomNavigationAction
+            component={Link}
+            to="/"
+            label="Month"
+            value="/"
+            icon={<FavoriteIcon/>}
+          />
+        </BottomNavigation>
+      </Paper>
     </Container>
   )
 

@@ -7,6 +7,7 @@ import { CategoryExpense } from "types";
 import {
   CATEGORY_CONFIG,
 } from "constants/category";
+import Amount from "../Amount";
 
 interface CategoryInfoProps {
   categories: CategoryExpense[];
@@ -25,7 +26,9 @@ const CategoryInfo = ({categories}: CategoryInfoProps) => {
         {
           label: 'Categories percentage',
           data: sortedByAmountList.map(({amount}) => amount),
-          backgroundColor: sortedByAmountList.map(({category}) => CATEGORY_CONFIG[category].color),
+          backgroundColor: sortedByAmountList.map(({category}) =>
+             CATEGORY_CONFIG[category] ? CATEGORY_CONFIG[category].color : CATEGORY_CONFIG['Others'].color
+          ),
         },
       ],
     };
@@ -49,12 +52,12 @@ const CategoryInfo = ({categories}: CategoryInfoProps) => {
         <Grid container spacing={0} justifyContent="space-evenly">
           <Grid item xs={12} sm={6}>
             {sortedByAmountList.map(({category, amount}) => (
-              <Grid container justifyContent="space-evenly">
+              <Grid key={category} container justifyContent="space-evenly">
                 <Grid item xs={6} sm={4}>
                   <Typography align="left">{category}</Typography>
                 </Grid>
                 <Grid item xs={6} sm={1}>
-                  <Typography align="right">{amount}</Typography>
+                  <Typography align="right"><Amount amount={-amount}/></Typography>
                 </Grid>
               </Grid>
             ))}

@@ -27,6 +27,7 @@ def get_by_month(date):
 
 
     return {
+        "date": date,
         "income": month_income,
         "expense": month_expense,
         "cash_flow": month_cash_flow,
@@ -48,9 +49,9 @@ def get_monthly_avg(df):
     month_income_avg = int(income_by_month.mean())
     month_expense_avg = int(expense_by_month.mean())
     month_cash_flow_avg = int(month_income_avg - month_expense_avg)
-
     return {
         "income": month_income_avg,
         "expense": month_expense_avg,
         "cash_flow": month_cash_flow_avg,
     }
+

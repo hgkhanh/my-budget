@@ -13,6 +13,7 @@ import {
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 import {YearAPIResponse} from "types";
+import moment from 'moment';
 
 ChartJS.register(
   LinearScale,
@@ -32,32 +33,38 @@ interface MonthlyBarChartProps {
 
 
 const MonthlyBarChart = ({yearData}: MonthlyBarChartProps) => {
+  const yearStartingBalance = 0;
   const monthsData = yearData.months.filter(({income, expense}) => !(income == 0 && expense == 0));
   const labels = monthsData.map(({date}) => date);
+  const wealthByMonth = monthsData.map(({date: currentDate}) => {
+    // wealth at one month equal sum of cash flow of previous month
+    const previousMonths = monthsData.filter(({date}) => {
+      return moment(currentDate).valueOf() > moment(date).valueOf()
+    });
+    return previousMonths.reduce((sum, {cash_flow}) => sum + cash_flow, yearStartingBalance);
+  })
   const data = {
     labels,
     datasets: [
       {
         type: 'line' as const,
-        label: 'Cash flow',
-        borderColor: 'rgb(255, 99, 132)',
+        label: 'Wealth',
+        borderColor: 'rgb(75, 192, 192)',
         borderWidth: 2,
         fill: false,
-        data: labels.map(() => 123),
+        data: wealthByMonth,
       },
       {
         type: 'bar' as const,
         label: 'Income',
-        backgroundColor: 'rgb(75, 192, 192)',
-        data: labels.map(() => -100),
-        borderColor: 'white',
-        borderWidth: 2,
+        backgroundColor: 'rgb(53, 162, 235)',
+        data: monthsData.map(({income}) => income),
       },
       {
         type: 'bar' as const,
         label: 'Expense',
-        backgroundColor: 'rgb(53, 162, 235)',
-        data: labels.map(() => 220),
+        backgroundColor: 'rgb(255, 99, 132)',
+        data: monthsData.map(({expense}) => expense),
       },
     ],
   };

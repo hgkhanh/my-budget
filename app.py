@@ -8,17 +8,16 @@ app = Flask(__name__, static_folder='client/build', static_url_path='')
 CORS(app)
 
 
-@app.route('/api/year', methods=['GET'])
+@app.route('/api/year/<year_input>', methods=['GET'])
 @cross_origin()
-def year_index():
-    return jsonify(year.total())
+def year_index(year_input):
+    return jsonify(year.get_by_year(int(year_input)))
 
 
-@app.route('/api/month', methods=['GET'])
+@app.route('/api/month/<date_input>', methods=['GET'])
 @cross_origin()
-def month_index():
-    date = request.args.get('date', type=str)
-    return jsonify(month.get_by_month(date))
+def month_index(date_input):
+    return jsonify(month.get_by_month(date_input))
 
 
 @app.route('/')

@@ -8,14 +8,16 @@ import {
   lightGreen,
   lightBlue,
   purple,
-  red,
+  cyan,
   grey
 } from '@mui/material/colors';
+
 interface CategoryConfig {
   [key: string]: {
     color: string;
   }
 }
+
 export const CATEGORY_CONFIG: CategoryConfig = {
   "Rents & Utilities": {
     color: brown['A400']
@@ -43,7 +45,7 @@ export const CATEGORY_CONFIG: CategoryConfig = {
   }, "Shopping": {
     color: purple['A100']
   }, "Travel": {
-    color: red['A100']
+    color: cyan['100']
   }, "Others": {
     color: grey['A400']
   }

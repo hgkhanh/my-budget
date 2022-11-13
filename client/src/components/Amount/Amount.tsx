@@ -8,7 +8,18 @@ const Amount = ({ amount }: {amount: number}) => {
   } else if (amount < 0) {
     color = TEXT_COLOR.red;
   }
-  return (<span style={{color: color}}>{amount < 0 && "-"}€{Math.abs(amount)}</span>)
+  return (
+    <span style={{color: color}}>
+      {
+        new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'EUR',
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        }).format(amount)
+      }
+    </span>
+  )
 }
 
 export default Amount;
