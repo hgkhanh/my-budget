@@ -10,70 +10,67 @@ import Overview from "../Overview";
 import CategoryInfo from "../CategoryInfo";
 import {Link, useLocation} from "react-router-dom";
 import Error from "../Error";
+import LoadingBox from "../LoadingBox";
 
 const Year = () => {
   const [date, setDate] = useState(moment().set({'date': 1}).subtract(1, 'month'));
   const [yearData, setYearData] = useState<YearAPIResponse>();
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
+  const [isError, setError] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
+    setLoading(true);
     fetch(`/api/year/${date.year()}`).then(response => {
       if (response.status === 200) {
         return response.json()
       }
     }).then(data => setYearData(data))
-      .catch(error => console.log(error))
+      .catch(() => setError(true))
       .finally(() => setLoading(false))
   }, []);
 
-  if (isLoading) {
+  if (isError) {
     return (
-      <Container fixed>
-        <Box sx={{
-          height: '80vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <CircularProgress/>
-        </Box>
-      </Container>
+      <Error/>
     )
   }
 
-  if (yearData && yearData.year) {
-    return (
-      <Container fixed>
-        <h1>2022</h1>
-        <Overview data={yearData.year}/>
-        <MonthlyBarChart yearData={yearData}/>
-        <CategoryInfo categories={yearData.year.categories}/>
-        <Paper sx={{position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={3}>
-          <BottomNavigation
-            showLabels value={location.pathname}>
-            <BottomNavigationAction
-              component={Link}
-              to="/year"
-              label="Year"
-              value="/year"
-              icon={<RestoreIcon/>}
-            />
-            <BottomNavigationAction
-              component={Link}
-              to="/"
-              label="Month"
-              value="/"
-              icon={<FavoriteIcon/>}
-            />
-          </BottomNavigation>
-        </Paper>
-      </Container>
-    )
-  }
   return (
-    <Error/>
+    <Container fixed>
+      <h1>2022</h1>
+      {
+        isLoading || !yearData ? (<LoadingBox/>) :
+          (
+            <>
+              <Overview data={yearData.year}/>
+              <MonthlyBarChart yearData={yearData}/>
+              <CategoryInfo categories={yearData.year.categories}/>
+              <Paper sx={{position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={3}>
+                <BottomNavigation
+                  showLabels value={location.pathname}>
+                  <BottomNavigationAction
+                    component={Link}
+                    to="/year"
+                    label="Year"
+                    value="/year"
+                    icon={<RestoreIcon/>}
+                  />
+                  <BottomNavigationAction
+                    component={Link}
+                    to="/"
+                    label="Month"
+                    value="/"
+                    icon={<FavoriteIcon/>}
+                  />
+                </BottomNavigation>
+              </Paper>
+            </>
+          )
+      }
+    </Container>
   )
+
 }
 
 export default Year;
