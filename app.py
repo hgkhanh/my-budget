@@ -24,7 +24,7 @@ def month_index(date_input):
 @app.route("/<string:path>")
 @app.route('/<path:path>')
 @cross_origin()
-def serve():
+def serve(path):
     return send_from_directory(app.static_folder, 'index.html')
 
 
