@@ -20,7 +20,8 @@ def month_index(date_input):
     return jsonify(month.get_by_month(date_input))
 
 
-@app.route('/')
+@app.route('/', defaults={'path': ''})
+@app.route("/<string:path>")
 @app.route('/<path:path>')
 @cross_origin()
 def serve():
