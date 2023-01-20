@@ -16,7 +16,7 @@ interface CategoryInfoProps {
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const CategoryInfo = ({categories}: CategoryInfoProps) => {
-  if (categories.length > 0) {
+  if (categories && categories.length > 0) {
     const sortedByAmountList = categories.sort(function (a, b) {
       return b.amount - a.amount;
     });
@@ -51,7 +51,7 @@ const CategoryInfo = ({categories}: CategoryInfoProps) => {
         <h2>Categories</h2>
         <Grid container spacing={0} justifyContent="space-evenly">
           <Grid item xs={12} sm={6}>
-            {sortedByAmountList.map(({category, amount}) => (
+            {sortedByAmountList.map(({category, amount, average}) => (
               <Grid key={category} container justifyContent="space-evenly">
                 <Grid item xs={6} sm={4}>
                   <Typography align="left">{category}</Typography>
@@ -59,6 +59,12 @@ const CategoryInfo = ({categories}: CategoryInfoProps) => {
                 <Grid item xs={6} sm={2}>
                   <Typography align="right"><Amount amount={-amount}/></Typography>
                 </Grid>
+                {average && (
+                  <Grid item xs={6} sm={2}>
+                  <Typography align="right"><Amount amount={-average}/></Typography>
+                  </Grid>
+                )}
+
               </Grid>
             ))}
           </Grid>

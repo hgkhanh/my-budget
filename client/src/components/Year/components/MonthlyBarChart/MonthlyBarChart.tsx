@@ -34,7 +34,7 @@ interface MonthlyBarChartProps {
 
 const MonthlyBarChart = ({yearData}: MonthlyBarChartProps) => {
   const yearStartingBalance = 0;
-  const monthsData = yearData.months.filter(({income, expense}) => !(income == 0 && expense == 0));
+  const monthsData = yearData.months.filter(({income, expense}) => !(income === 0 && expense === 0));
   const labels = monthsData.map(({date}) => date);
   const wealthByMonth = monthsData.map(({date: currentDate}) => {
     // wealth at one month equal sum of cash flow up until current month

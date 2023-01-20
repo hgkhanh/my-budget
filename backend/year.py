@@ -29,24 +29,29 @@ def get_by_year(year_input):
     df_selection_income = df_year_selection.query(
         "transfer_type == 'income'"
     )
-    year_income = int(df_selection_income["amount"].sum(numeric_only=True))
+    year_income = int(df_selection_income["amount"].sum())
     df_selection_expense = df_year_selection.query(
         "transfer_type == 'expense'"
     )
-    year_expense = int(df_selection_expense["amount"].sum(numeric_only=True))
+    year_expense = int(df_selection_expense["amount"].sum())
     year_cash_flow = year_income - year_expense
 
-    # Monthly avg
-    monthly_avg = month.get_monthly_avg(df_year_selection)
 
     # All months overview
-    month_list = map(lambda month: str(year_input) + month, const.months)
-    monthly_overview = map(lambda date: month.get_by_month(date), list(month_list))
+    month_list = list(map(lambda cur_month: str(year_input) + cur_month, const.months))
+    count_of_active_months = len(list(month_list))
+    monthly_overview = map(lambda date: month.get_by_month(date), month_list)
 
     # 50-30-20
     expense_by_category = utils.group_by_category(df_selection_expense)
     need_to_have_expense = expense_by_category.filter(items=const.need_to_have_categories, axis=0)
     nice_to_have_expense = expense_by_category.filter(items=const.nice_to_have_categories, axis=0)
+
+
+    # Monthly avg
+    monthly_avg = month.get_monthly_avg(df_year_selection)
+    expense_by_category['average'] = \
+        expense_by_category['amount'].map(lambda x: round(x/count_of_active_months))
 
     return {
         "year": {
@@ -55,12 +60,12 @@ def get_by_year(year_input):
             "cash_flow": year_cash_flow,
             "need_to_have": int(need_to_have_expense.sum()),
             "nice_to_have": int(nice_to_have_expense.sum()),
-            "categories": expense_by_category.reset_index().to_dict(orient='records'),
         },
         "monthly_avg": {
             "income": monthly_avg["income"],
             "expense": monthly_avg["expense"],
             "cash_flow": int(monthly_avg["income"] - monthly_avg["expense"]),
         },
-        "months": list(monthly_overview)
+        "months": list(monthly_overview),
+        "categories": expense_by_category.reset_index().to_dict(orient='records'),
     }

@@ -5,7 +5,7 @@
 ```
 pipenv install -r requirements.txt
 pipenv shell
-python app.py
+flask run
 ```
 
 See api at `127.0.0.1:5000`, e.g.

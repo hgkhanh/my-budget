@@ -13,11 +13,12 @@ def get_by_month(date):
     df_income = df_month.query(
         "transfer_type == 'income'"
     )
-    month_income = int(df_income["amount"].sum(numeric_only=True))
+    month_income = int(df_income["amount"].sum())
     df_expense = df_month.query(
         "transfer_type == 'expense'"
     )
-    month_expense = int(df_expense["amount"].sum(numeric_only=True))
+    month_expense = int(df_expense["amount"].sum())
+    month_household_expense = int(df_expense["real_amount"].sum())
     month_cash_flow = month_income - month_expense
 
     # 50-30-20

@@ -2,6 +2,7 @@ export interface YearAPIResponse {
   monthly_avg: PeriodOverview;
   year: PeriodOverview
   months: PeriodOverview[];
+  categories: CategoryExpense[];
 }
 
 export interface PeriodOverview {
@@ -11,10 +12,11 @@ export interface PeriodOverview {
   income: number;
   need_to_have: number;
   nice_to_have: number;
-  categories: CategoryExpense[]
+  categories: CategoryExpense[];
 }
 
 export interface CategoryExpense {
-  amount: number;
   category: string;
+  amount: number;
+  average: number;
 }
