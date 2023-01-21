@@ -1,25 +1,28 @@
 import { TEXT_COLOR } from "constants/typography";
 
 
-const Amount = ({ isExpense = false, amount }: {isExpense?: boolean, amount: number}) => {
+const DiffAmount = ({ amount }: { amount: number }) => {
   let color: string = TEXT_COLOR.dark;
+  let absoluteAmount = Math.abs(amount);
+  let prefix = '▼';
   if (amount > 0) {
-    color = isExpense ? TEXT_COLOR.red : TEXT_COLOR.green;
+    color = TEXT_COLOR.red;
+    prefix = '▲';
   } else if (amount < 0) {
-    color = isExpense ? TEXT_COLOR.green : TEXT_COLOR.red;
+    color = TEXT_COLOR.green;
   }
   return (
     <span style={{color: color}}>
-      {
+      {prefix}{
         new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'EUR',
           minimumFractionDigits: 0,
           maximumFractionDigits: 0,
-        }).format(amount)
+        }).format(absoluteAmount)
       }
     </span>
   )
 }
 
-export default Amount;
+export default DiffAmount;

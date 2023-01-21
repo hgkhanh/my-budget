@@ -1,3 +1,4 @@
+import pandas as pd
 import datetime
 import constants as const
 
@@ -23,3 +24,7 @@ def to_percent(value):
 def group_by_category(df):
     return df.groupby(by=["category"]).sum(numeric_only=True)[["amount"]].sort_index(
             key=category_sorter)
+
+def date_to_year(date):
+    return pd.to_datetime(date).dt.year
+

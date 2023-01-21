@@ -45,7 +45,7 @@ const Year = () => {
             <>
               <Overview data={yearData.year}/>
               <MonthlyBarChart yearData={yearData}/>
-              <CategoryInfo categories={yearData.categories}/>
+              <CategoryInfo isYearInfo={true} categories={yearData.categories}/>
               <Paper sx={{position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={3}>
                 <BottomNavigation
                   showLabels value={location.pathname}>

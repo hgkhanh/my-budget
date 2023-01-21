@@ -41,7 +41,7 @@ const Month = () => {
         (
           <>
             <Overview data={data}/>
-            <CategoryInfo categories={data.categories}/>
+            <CategoryInfo isYearInfo={false} categories={data.categories}/>
           </>
         )
       }

@@ -18,5 +18,6 @@ export interface PeriodOverview {
 export interface CategoryExpense {
   category: string;
   amount: number;
-  average: number;
+  average?: number;
+  from_avg?: number;
 }

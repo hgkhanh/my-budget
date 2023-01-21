@@ -5,7 +5,6 @@ import database as db
 import constants as const
 from backend import utils
 
-
 def get_by_year(year_input):
     df = db.fetch_all()
     df["year"] = pd.to_datetime(df["date"]).dt.year
@@ -36,10 +35,8 @@ def get_by_year(year_input):
     year_expense = int(df_selection_expense["amount"].sum())
     year_cash_flow = year_income - year_expense
 
-
     # All months overview
     month_list = list(map(lambda cur_month: str(year_input) + cur_month, const.months))
-    count_of_active_months = len(list(month_list))
     monthly_overview = map(lambda date: month.get_by_month(date), month_list)
 
     # 50-30-20
@@ -47,8 +44,8 @@ def get_by_year(year_input):
     need_to_have_expense = expense_by_category.filter(items=const.need_to_have_categories, axis=0)
     nice_to_have_expense = expense_by_category.filter(items=const.nice_to_have_categories, axis=0)
 
-
     # Monthly avg
+    count_of_active_months = month.count_active_months(year_input)
     monthly_avg = month.get_monthly_avg(df_year_selection)
     expense_by_category['average'] = \
         expense_by_category['amount'].map(lambda x: round(x/count_of_active_months))

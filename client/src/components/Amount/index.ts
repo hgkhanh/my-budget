@@ -1,2 +1,2 @@
-import Amount from "components/Amount/Amount";
+import Amount from "./Amount";
 export default Amount;

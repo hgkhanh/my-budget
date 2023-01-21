@@ -1,7 +1,7 @@
 {
   "name": "my-budget",
   "version": "0.1.0",
-  "proxy": "https://stark-atoll-51692.herokuapp.com/",
+  "proxy": "http://localhost:5000/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
