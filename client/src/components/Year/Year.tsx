@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import moment from "moment";
-import {Container, Paper, BottomNavigation, BottomNavigationAction, Box, CircularProgress} from "@mui/material";
+import {Container, Button, Paper, BottomNavigation, BottomNavigationAction, Box, CircularProgress} from "@mui/material";
 import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
@@ -28,7 +28,7 @@ const Year = () => {
     }).then(data => setYearData(data))
       .catch(() => setError(true))
       .finally(() => setLoading(false))
-  }, []);
+  }, [date]);
 
   if (isError) {
     return (
@@ -38,7 +38,9 @@ const Year = () => {
 
   return (
     <Container fixed>
-      <h1>2022</h1>
+      <h1>{date.year()}</h1>
+      <Button onClick={() => setDate(date.clone().subtract(1, 'year'))}>Prev</Button>
+      <Button onClick={() => setDate(date.clone().add(1, 'year'))}>Next</Button>
       {
         isLoading || !yearData ? (<LoadingBox/>) :
           (

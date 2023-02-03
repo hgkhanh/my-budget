@@ -11,6 +11,7 @@ def get_by_year(year_input):
     df_year_selection = df.query(
         'year == @year_input'
     )
+
     # All months
     expense_by_year = df.query(
         "transfer_type == 'expense'"
