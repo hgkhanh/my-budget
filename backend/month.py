@@ -20,8 +20,9 @@ def count_active_months(year_input):
 def get_by_month(date):
     df = db.fetch_all()
 
-    year_input = pd.to_datetime(df["date"]).dt.year
-    df["year"] = year_input
+    df["year"] = pd.to_datetime(df["date"]).dt.year
+
+    year_input = pd.to_datetime(date).year
 
     df_year_selection = df.query(
         'year == @year_input'
