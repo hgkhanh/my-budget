@@ -1,2 +1,2 @@
-import MonthlyBarChart from "./MonthlyBarChart";
-export default MonthlyBarChart;
+import MonthlyBarChart from './MonthlyBarChart'
+export default MonthlyBarChart

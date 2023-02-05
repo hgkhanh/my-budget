@@ -1,2 +1,2 @@
-import DiffAmount from "./DiffAmount";
-export default DiffAmount;
+import DiffAmount from './DiffAmount'
+export default DiffAmount

@@ -11,46 +11,49 @@ import {
   cyan,
   grey,
   red
-} from '@mui/material/colors';
+} from '@mui/material/colors'
 
 interface CategoryConfig {
   [key: string]: {
-    color: string;
+    color: string
   }
 }
 
 export const CATEGORY_CONFIG: CategoryConfig = {
-  "Rents & Utilities": {
+  'Rents & Utilities': {
     color: brown['A400']
   },
-  "Furniture & Appliances": {
+  'Furniture & Appliances': {
     color: lime['500']
   },
-  "Service Bill & Insurance": {
+  'Service Bill & Insurance': {
     color: deepPurple['600']
   },
-  "Groceries": {
+  Groceries: {
     color: deepOrange['A200']
   },
-  "Work & Equipment": {
+  'Work & Equipment': {
     color: green['A400']
   },
-  "Food & Drink": {
+  'Food & Drink': {
     color: amber['A700']
   },
-  "Entertainment": {
+  Entertainment: {
     color: lightBlue['A400']
   },
-  "Transportation": {
+  Transportation: {
     color: lightGreen['A400']
-  }, "Shopping": {
+  },
+  Shopping: {
     color: purple['A100']
-  }, "Travel": {
+  },
+  Travel: {
     color: cyan['100']
-  }, "Friends & Family": {
+  },
+  'Friends & Family': {
     color: red['500']
-  }, "Others": {
+  },
+  Others: {
     color: grey['A400']
   }
-};
-
+}

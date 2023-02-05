@@ -1,16 +1,20 @@
-import React from 'react';
+import React from 'react'
 
-import {Container, Button, BottomNavigation, BottomNavigationAction, Paper, CircularProgress, Box} from "@mui/material";
+import { Container, CircularProgress, Box } from '@mui/material'
 
-const LoadingBox = () => (      <Container fixed>
-  <Box sx={{
-    height: '80vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }}>
-    <CircularProgress/>
-  </Box>
-</Container>)
+const LoadingBox = () => (
+  <Container fixed>
+    <Box
+      sx={{
+        height: '80vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
+      <CircularProgress />
+    </Box>
+  </Container>
+)
 
-export default LoadingBox;
+export default LoadingBox

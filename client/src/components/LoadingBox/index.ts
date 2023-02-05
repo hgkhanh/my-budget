@@ -1,3 +1,3 @@
-import LoadingBox from './LoadingBox';
+import LoadingBox from './LoadingBox'
 
-export default LoadingBox;
+export default LoadingBox

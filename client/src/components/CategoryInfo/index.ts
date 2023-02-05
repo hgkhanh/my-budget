@@ -1,3 +1,3 @@
-import CategoryInfo from "./CategoryInfo";
+import CategoryInfo from './CategoryInfo'
 
-export default CategoryInfo;
+export default CategoryInfo

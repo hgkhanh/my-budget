@@ -1,3 +1,3 @@
-import CategoryPieChart from "./CategoryPieChart";
+import CategoryPieChart from './CategoryPieChart'
 
-export default CategoryPieChart;
+export default CategoryPieChart

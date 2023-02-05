@@ -1,3 +1,3 @@
-import Year from './Year';
+import Year from './Year'
 
-export default Year;
+export default Year
