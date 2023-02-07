@@ -5,7 +5,8 @@ import {
   Button,
   BottomNavigation,
   BottomNavigationAction,
-  Paper
+  Paper,
+  Box
 } from '@mui/material'
 import RestoreIcon from '@mui/icons-material/Restore'
 import FavoriteIcon from '@mui/icons-material/Favorite'
@@ -15,6 +16,7 @@ import Overview from '../Overview/Overview'
 import CategoryInfo from '../CategoryInfo/CategoryInfo'
 import { Link, useLocation } from 'react-router-dom'
 import LoadingBox from '../LoadingBox'
+import TransactionList from 'components/TransactionList'
 
 const Month = () => {
   const [isLoading, setLoading] = useState(false)
@@ -57,9 +59,14 @@ const Month = () => {
         <>
           <Overview data={data} />
           <CategoryInfo isYearInfo={false} categories={data.categories} />
+          <TransactionList
+            income={data.transactions.income}
+            expense={data.transactions.expense}
+          />
         </>
       )}
 
+      <Box sx={{ mb: 8, mt: 8 }} />
       <Paper
         sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
         elevation={3}

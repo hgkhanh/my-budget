@@ -17,7 +17,7 @@ def count_active_months(year_input):
     return len(df_year_groupby_date.index)
 
 
-def get_by_month(date):
+def get_by_month(date, isMonthAnalytic=True):
     df = db.fetch_all()
 
     df["year"] = pd.to_datetime(df["date"]).dt.year
@@ -59,17 +59,7 @@ def get_by_month(date):
     year_expense_by_category['average'] = \
         year_expense_by_category['year_amount'].map(lambda x: round(x / month_count))
 
-    print('year_expense_by_category')
-    print(year_expense_by_category)
-
-    print('expense_by_category')
-    print(expense_by_category)
-    expense_by_category = expense_by_category.join(year_expense_by_category.drop(columns=['year_amount']))
-
-    diffs = expense_by_category['amount'] - expense_by_category['average']
-    expense_by_category['from_avg'] = diffs
-
-    return {
+    result = {
         "date": date,
         "income": month_income,
         "expense": month_expense,
@@ -77,8 +67,23 @@ def get_by_month(date):
         "cash_flow": month_cash_flow,
         "need_to_have": int(need_to_have_expense.sum()),
         "nice_to_have": int(nice_to_have_expense.sum()),
-        "categories": expense_by_category.reset_index().to_dict(orient='records'),
     }
+
+    if isMonthAnalytic:
+        expense_by_category = expense_by_category.join(year_expense_by_category.drop(columns=['year_amount']))
+
+        diffs = expense_by_category['amount'] - expense_by_category['average']
+        expense_by_category['from_avg'] = diffs
+
+        result["categories"] = expense_by_category.reset_index().to_dict(orient='records')
+
+        # Raw transactions
+        result["transactions"] = {
+            "income": df_income.reset_index().to_dict(orient='records'),
+            "expense": df_expense.reset_index().to_dict(orient='records')
+        }
+
+    return result
 
 
 def get_monthly_avg(df):
