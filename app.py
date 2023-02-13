@@ -3,7 +3,7 @@ from flask.helpers import send_from_directory
 from flask_cors import CORS, cross_origin
 from flask_httpauth import HTTPBasicAuth
 
-from backend import overview
+from backend import overview, utils
 from auth import check_password
 
 auth = HTTPBasicAuth()
@@ -16,22 +16,11 @@ def verify_password(username, password):
 app = Flask(__name__, static_folder='client/build', static_url_path='/')
 CORS(app)
 
-# @app.route('/api/year/<year_input>', methods=['GET'])
-# @cross_origin()
-# def year_index(year_input):
-#     return jsonify(year.get_by_year(int(year_input)))
 
-
-# @app.route('/api/month/<date_input>', methods=['GET'])
-# @cross_origin()
-# def month_index(date_input):
-#     return jsonify(month.get_by_month(date_input))
-
-
-@app.route('/api/overview/<date>', methods=['GET'])
+@app.route('/api/analytics/<date>', methods=['GET'])
 @cross_origin()
 def analytics(date):
-    resolution = request.args.get('resolution', 'month')
+    resolution = request.args.get('resolution', 'year')
     return overview.get_by_date(date, resolution)
 
 

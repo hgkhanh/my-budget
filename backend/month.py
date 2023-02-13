@@ -1,12 +1,11 @@
 import pandas as pd
 
 import database as db
-from backend import utils
-import constants as const
+from backend import utils, year
 
 
 def get_overview(date):
-    df_month = query_by_month(date)
+    df_month = query_by_date(date)
 
     df_income = df_month.query(
         "transfer_type == 'income'"
@@ -32,7 +31,7 @@ def get_overview(date):
 
 
 def get_transactions(date):
-    df_month = query_by_month(date)
+    df_month = query_by_date(date)
 
     df_income = df_month.query(
         "transfer_type == 'income'"
@@ -51,8 +50,8 @@ def get_transactions(date):
 
 
 def get_categories(date):
-    df_year = query_by_year(date)
-    df_month = query_by_month(date)
+    df_year = year.query_by_date(date)
+    df_month = query_by_date(date)
 
     df_income = df_month.query(
         "transfer_type == 'income'"
@@ -101,11 +100,22 @@ def get_categories(date):
     }
 
 
+def get_references(date, look_back_range):
+    date = pd.to_datetime(date)
+    result = []
+
+    # Get previous months
+    for i in range(look_back_range, 0, -1):
+        cur_date = utils.deduct_months(date, i)
+        result.append(get_overview(cur_date))
+
+    return result
+
 
 def count_active_months(date):
     df = db.fetch_all()
 
-    year_input = pd.to_datetime(date).year
+    year_input = utils.date_to_year(date)
 
     df_year_selection = df.query(
         'year == @year_input'
@@ -116,25 +126,9 @@ def count_active_months(date):
     return len(df_year_groupby_date.index)
 
 
-def query_by_year(date):
+# Return all data in a given month
+def query_by_date(date):
     df = db.fetch_all()
-    year_input = pd.to_datetime(date).year
-
-    return df.query(
-        'year == @year_input'
-    )
-
-
-def query_by_month(date):
-    df = db.fetch_all()
-    #
-    # df["year"] = pd.to_datetime(df["date"]).dt.year
-    #
-    # year_input = pd.to_datetime(date).year
-    #
-    # df_year_selection = df.query(
-    #     'year == @year_input'
-    # )
 
     df_month = df.query(
         "date == @date"
@@ -197,6 +191,7 @@ def query_by_month(date):
     # return result
 
 
+# Group the dataframe by date, calculate average
 def get_monthly_avg(df):
     income_by_month = df.query(
         "transfer_type == 'income'"

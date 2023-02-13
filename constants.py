@@ -27,3 +27,7 @@ months = [
     "-11-01",
     "-12-01",
 ]
+
+
+# How many months should we included in reference data (lookback comparison)
+reference_range = 5

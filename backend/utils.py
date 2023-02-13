@@ -1,5 +1,6 @@
 import pandas as pd
-import datetime
+from datetime import datetime, date
+import calendar
 import constants as const
 
 
@@ -25,6 +26,16 @@ def group_by_category(df):
     return df.groupby(by=["category"]).sum(numeric_only=True)[["amount"]].sort_index(
             key=category_sorter)
 
+
 def date_to_year(date):
-    return pd.to_datetime(date).dt.year
+    return pd.to_datetime(date).year
+
+
+def deduct_months(source_date, months):
+    source_date = pd.to_datetime(source_date)
+    month = source_date.month - 1 - months
+    year = source_date.year - month // 12
+    month = month % 12 + 1
+    day = min(source_date.day, calendar.monthrange(year, month)[1])
+    return date(year, month, day).isoformat()
 
