@@ -28,16 +28,16 @@ ChartJS.register(
 )
 
 interface MonthlyBarChartProps {
-  yearData: AnalyticsAPIResponse
+  months: PeriodOverview[]
 }
 
-const MonthlyBarChart = ({ yearData }: MonthlyBarChartProps) => {
+const MonthlyBarChart = ({ months }: MonthlyBarChartProps) => {
   const yearStartingBalance = 0
-  const monthsData = yearData.referenceMonths.filter(
+  const monthsData = months.filter(
     ({ income, expense }) => !(income === 0 && expense === 0)
   )
 
-  const labels = yearData.referenceMonths.map(({ date }) => date)
+  const labels = monthsData.map(({ date }) => date)
   const wealthByMonth = monthsData.map(({ date: currentDate }) => {
     // wealth at one month equal sum of cash flow up until current month
     const monthsTillNow = monthsData.filter(({ date }) => {

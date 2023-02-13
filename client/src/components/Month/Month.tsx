@@ -17,6 +17,7 @@ import CategoryInfo from '../CategoryInfo/CategoryInfo'
 import { Link, useLocation } from 'react-router-dom'
 import LoadingBox from '../LoadingBox'
 import TransactionList from 'components/TransactionList'
+import MonthlyBarChart from 'components/Year/components/MonthlyBarChart'
 
 const Month = () => {
   const [isLoading, setLoading] = useState(false)
@@ -63,6 +64,7 @@ const Month = () => {
       ) : (
         <>
           <Overview data={data.overview} />
+          <MonthlyBarChart months={data.referenceMonths} />
           <CategoryInfo
             isYearInfo={false}
             categories={data.categories.expense}

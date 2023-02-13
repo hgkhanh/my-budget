@@ -17,6 +17,12 @@ app = Flask(__name__, static_folder='client/build', static_url_path='/')
 CORS(app)
 
 
+@app.route('/api/test/<date>', methods=['GET'])
+@cross_origin()
+def test(date):
+    return utils.deduct_months(date, 5)
+
+
 @app.route('/api/analytics/<date>', methods=['GET'])
 @cross_origin()
 def analytics(date):

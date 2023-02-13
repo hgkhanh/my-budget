@@ -61,7 +61,7 @@ const Year = () => {
       ) : (
         <>
           <Overview data={yearData.overview} />
-          <MonthlyBarChart yearData={yearData} />
+          <MonthlyBarChart months={yearData.referenceMonths} />
           <CategoryInfo
             isYearInfo={true}
             categories={yearData.categories.expense}

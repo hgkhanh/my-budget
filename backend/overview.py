@@ -18,6 +18,7 @@ def get_by_date(date, resolution):
         transactions = month.get_transactions(date)
         categories = month.get_categories(date)
         reference_months = month.get_references(date, const.reference_range)
+        reference_months.append(current_overview)
 
     result = {
         'overview': current_overview,
