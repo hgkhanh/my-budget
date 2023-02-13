@@ -3,10 +3,10 @@ import { Doughnut } from 'react-chartjs-2'
 import { ChartData, ChartOptions, TooltipItem } from 'chart.js'
 import { sum } from 'lodash/fp'
 import { CATEGORY_CONFIG } from 'constants/category'
-import { CategoryExpense } from 'types'
+import { CategoryItem } from 'types'
 
 interface CategoryPieChartProps {
-  categoryDataset: CategoryExpense[]
+  categoryDataset: CategoryItem[]
 }
 
 const CategoryPieChart = ({ categoryDataset }: CategoryPieChartProps) => {

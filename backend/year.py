@@ -30,18 +30,17 @@ def get_overview(date):
     # # Monthly avg
     count_of_active_months = month.count_active_months(date)
     monthly_avg = month.get_monthly_avg(df_year_selection)
-    expense_by_category['average'] = \
-    expense_by_category['amount'].map(lambda x: round(x/count_of_active_months))
+    expense_by_category['average'] = expense_by_category['amount'].map(lambda x: round(x/count_of_active_months))
 
     return {
         'income': year_income,
         'expense': year_expense,
-        'cash_flow': year_cash_flow,
-        'need_to_have': int(need_to_have_expense.sum()),
-        'nice_to_have': int(nice_to_have_expense.sum()),
-        'average_income': monthly_avg['income'],
-        'average_expense': monthly_avg['expense'],
-        'average_cashflow': int(monthly_avg['income'] - monthly_avg['expense']),
+        'cashFlow': year_cash_flow,
+        'needToHave': int(need_to_have_expense.sum()),
+        'niceToHave': int(nice_to_have_expense.sum()),
+        'averageIncome': monthly_avg['income'],
+        'averageExpense': monthly_avg['expense'],
+        'averageCashFlow': int(monthly_avg['income'] - monthly_avg['expense']),
     }
 
 

@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import RestoreIcon from '@mui/icons-material/Restore'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import { PeriodOverview } from 'types'
+import { AnalyticsAPIResponse } from 'types'
 import moment from 'moment'
 import Overview from '../Overview/Overview'
 import CategoryInfo from '../CategoryInfo/CategoryInfo'
@@ -20,7 +20,7 @@ import TransactionList from 'components/TransactionList'
 
 const Month = () => {
   const [isLoading, setLoading] = useState(false)
-  const [data, setData] = useState<PeriodOverview>()
+  const [data, setData] = useState<AnalyticsAPIResponse>()
   const [date, setDate] = useState(
     moment().set({ date: 1 }).subtract(1, 'month')
   )
@@ -29,7 +29,12 @@ const Month = () => {
   useEffect(() => {
     if (date) {
       setLoading(true)
-      fetch(`/api/month/${date.format('YYYY-MM-DD')}`)
+      fetch(
+        `/api/analytics/${date.format('YYYY-MM-DD')}?` +
+          new URLSearchParams({
+            resolution: 'month'
+          })
+      )
         .then((response) => {
           if (response.status === 200) {
             return response.json()
@@ -57,8 +62,11 @@ const Month = () => {
         <LoadingBox />
       ) : (
         <>
-          <Overview data={data} />
-          <CategoryInfo isYearInfo={false} categories={data.categories} />
+          <Overview data={data.overview} />
+          <CategoryInfo
+            isYearInfo={false}
+            categories={data.categories.expense}
+          />
           <TransactionList
             income={data.transactions.income}
             expense={data.transactions.expense}

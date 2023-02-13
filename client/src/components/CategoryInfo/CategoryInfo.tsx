@@ -2,13 +2,13 @@ import React from 'react'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Grid, Typography } from '@mui/material'
 
-import { CategoryExpense } from 'types'
+import { CategoryItem } from 'types'
 import Amount from '../Amount'
 import CategoryPieChart from 'components/CategoryPieChart'
 import DiffAmount from 'components/DiffAmount'
 
 interface CategoryInfoProps {
-  categories: CategoryExpense[]
+  categories: CategoryItem[]
   isYearInfo: boolean
 }
 

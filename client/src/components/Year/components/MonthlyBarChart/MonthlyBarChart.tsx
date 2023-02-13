@@ -12,7 +12,7 @@ import {
   BarController
 } from 'chart.js'
 import { Chart } from 'react-chartjs-2'
-import { YearAPIResponse } from 'types'
+import { AnalyticsAPIResponse, PeriodOverview } from 'types'
 import moment from 'moment'
 
 ChartJS.register(
@@ -28,22 +28,23 @@ ChartJS.register(
 )
 
 interface MonthlyBarChartProps {
-  yearData: YearAPIResponse
+  yearData: AnalyticsAPIResponse
 }
 
 const MonthlyBarChart = ({ yearData }: MonthlyBarChartProps) => {
   const yearStartingBalance = 0
-  const monthsData = yearData.months.filter(
+  const monthsData = yearData.referenceMonths.filter(
     ({ income, expense }) => !(income === 0 && expense === 0)
   )
-  const labels = monthsData.map(({ date }) => date)
+
+  const labels = yearData.referenceMonths.map(({ date }) => date)
   const wealthByMonth = monthsData.map(({ date: currentDate }) => {
     // wealth at one month equal sum of cash flow up until current month
     const monthsTillNow = monthsData.filter(({ date }) => {
       return moment(currentDate).valueOf() >= moment(date).valueOf()
     })
     return monthsTillNow.reduce(
-      (sum, { cash_flow }) => sum + cash_flow,
+      (sum, { cashFlow }) => sum + cashFlow,
       yearStartingBalance
     )
   })

@@ -20,7 +20,7 @@ CORS(app)
 @app.route('/api/analytics/<date>', methods=['GET'])
 @cross_origin()
 def analytics(date):
-    resolution = request.args.get('resolution', 'year')
+    resolution = request.args.get('resolution', 'month')
     return overview.get_by_date(date, resolution)
 
 

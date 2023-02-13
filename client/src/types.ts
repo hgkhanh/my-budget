@@ -1,8 +1,14 @@
-export interface YearAPIResponse {
-  monthly_avg: PeriodOverview
-  year: PeriodOverview
-  months: PeriodOverview[]
-  categories: CategoryExpense[]
+export interface AnalyticsAPIResponse {
+  overview: PeriodOverview
+  transactions: {
+    income: TransactionItem[]
+    expense: TransactionItem[]
+  }
+  categories: {
+    income: CategoryItem[]
+    expense: CategoryItem[]
+  }
+  referenceMonths: PeriodOverview[]
 }
 
 export interface PeriodOverview {
@@ -11,15 +17,15 @@ export interface PeriodOverview {
     income: TransactionItem[]
   }
   date: string
-  cash_flow: number
+  cashFlow: number
   expense: number
   income: number
-  need_to_have: number
-  nice_to_have: number
-  categories: CategoryExpense[]
+  needToHave: number
+  niceToHave: number
+  categories: CategoryItem[]
 }
 
-export interface CategoryExpense {
+export interface CategoryItem {
   category: string
   amount: number
   average?: number

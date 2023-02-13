@@ -2,6 +2,7 @@ import pandas as pd
 
 import database as db
 from backend import utils, year
+import constants as const
 
 
 def get_overview(date):
@@ -20,13 +21,20 @@ def get_overview(date):
     month_expense = int(df_expense["amount"].sum())
     month_household_expense = int(df_expense["real_amount"].sum())
 
+    # 50-30-20
+    expense_by_category = utils.group_by_category(df_expense)
+    need_to_have_expense = expense_by_category.filter(items=const.need_to_have_categories, axis=0)
+    nice_to_have_expense = expense_by_category.filter(items=const.nice_to_have_categories, axis=0)
+
     return {
         'date': date,
         'resolution': 'month',
         'income': month_income,
         'expense': month_expense,
         'householdExpense': month_household_expense,
-        'cashflow': month_income - month_expense
+        'cashFlow': month_income - month_expense,
+        "needToHave": int(need_to_have_expense.sum()),
+        "niceToHave": int(nice_to_have_expense.sum()),
     }
 
 
@@ -207,5 +215,5 @@ def get_monthly_avg(df):
     return {
         "income": month_income_avg,
         "expense": month_expense_avg,
-        "cash_flow": month_cash_flow_avg,
+        "cashFlow": month_cash_flow_avg,
     }

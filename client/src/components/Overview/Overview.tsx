@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Grid } from '@mui/material'
-import { PeriodOverview } from '../../types'
+import { PeriodOverview } from 'types'
 import { isEmpty } from 'lodash/fp'
 import Amount from 'components/Amount'
 
@@ -11,11 +11,11 @@ interface OverviewProps {
 
 const Overview = ({ data }: OverviewProps) => {
   if (!isEmpty(data) && data.expense > 0) {
-    const { income, expense, cash_flow, need_to_have, nice_to_have } = data
-    const need_to_have_percentage = Math.round((need_to_have * 100) / income)
-    const nice_to_have_percentage = Math.round((nice_to_have * 100) / income)
+    const { income, expense, cashFlow, needToHave, niceToHave } = data
+    const needToHave_percentage = Math.round((needToHave * 100) / income)
+    const niceToHave_percentage = Math.round((niceToHave * 100) / income)
     const saving_percentage = Math.round(
-      100 - need_to_have_percentage - nice_to_have_percentage
+      100 - needToHave_percentage - niceToHave_percentage
     )
     return (
       <>
@@ -36,7 +36,7 @@ const Overview = ({ data }: OverviewProps) => {
           <Grid item xs={4} sm={2}>
             <h3>Cash Flow</h3>
             <p>
-              <Amount amount={cash_flow} />
+              <Amount amount={cashFlow} />
             </p>
           </Grid>
         </Grid>
@@ -44,21 +44,21 @@ const Overview = ({ data }: OverviewProps) => {
           <Grid item xs={4} sm={2}>
             <h3>Need-to-have</h3>
             <p>
-              <Amount amount={-need_to_have} />
+              <Amount amount={-needToHave} />
             </p>
-            <p>{`${need_to_have_percentage}%`}</p>
+            <p>{`${needToHave_percentage}%`}</p>
           </Grid>
           <Grid item xs={4} sm={2}>
             <h3>Nice-to-have</h3>
             <p>
-              <Amount amount={-nice_to_have} />
+              <Amount amount={-niceToHave} />
             </p>
-            <p>{`${nice_to_have_percentage}%`}</p>
+            <p>{`${niceToHave_percentage}%`}</p>
           </Grid>
           <Grid item xs={4} sm={2}>
             <h3>Saving</h3>
             <p>
-              <Amount amount={cash_flow} />
+              <Amount amount={cashFlow} />
             </p>
             <p>{`${saving_percentage}%`}</p>
           </Grid>

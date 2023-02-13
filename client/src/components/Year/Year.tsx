@@ -10,7 +10,7 @@ import {
 import RestoreIcon from '@mui/icons-material/Restore'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 
-import { YearAPIResponse } from 'types'
+import { AnalyticsAPIResponse } from 'types'
 import MonthlyBarChart from 'components/Year/components/MonthlyBarChart'
 import Overview from '../Overview'
 import CategoryInfo from '../CategoryInfo'
@@ -22,14 +22,19 @@ const Year = () => {
   const [date, setDate] = useState(
     moment().set({ date: 1 }).subtract(1, 'month')
   )
-  const [yearData, setYearData] = useState<YearAPIResponse>()
+  const [yearData, setYearData] = useState<AnalyticsAPIResponse>()
   const [isLoading, setLoading] = useState(false)
   const [isError, setError] = useState(false)
   const location = useLocation()
 
   useEffect(() => {
     setLoading(true)
-    fetch(`/api/year/${date.year()}`)
+    fetch(
+      `/api/analytics/${date.format('YYYY-MM-DD')}?` +
+        new URLSearchParams({
+          resolution: 'year'
+        })
+    )
       .then((response) => {
         if (response.status === 200) {
           return response.json()
@@ -55,9 +60,12 @@ const Year = () => {
         <LoadingBox />
       ) : (
         <>
-          <Overview data={yearData.year} />
+          <Overview data={yearData.overview} />
           <MonthlyBarChart yearData={yearData} />
-          <CategoryInfo isYearInfo={true} categories={yearData.categories} />
+          <CategoryInfo
+            isYearInfo={true}
+            categories={yearData.categories.expense}
+          />
           <Paper
             sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
             elevation={3}
