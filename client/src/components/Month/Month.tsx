@@ -16,7 +16,7 @@ const Month = () => {
   const [date, setDate] = useState(
     moment().set({ date: 1 }).subtract(1, 'month')
   )
-  const [activeTab, setActiveTab] = useState<TransferType>(TransferType.Income)
+  const [activeTab, setActiveTab] = useState<TransferType>(TransferType.Expense)
 
   useEffect(() => {
     if (date) {

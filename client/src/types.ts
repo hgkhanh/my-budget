@@ -39,7 +39,7 @@ export interface TransactionItem {
   category: string
   comment: string
   date: string
-  real_amount: number
+  real_amount: number | string
   year: number
   transfer_type: TransferType
 }
