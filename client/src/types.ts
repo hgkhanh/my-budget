@@ -41,5 +41,10 @@ export interface TransactionItem {
   date: string
   real_amount: number
   year: number
-  transfer_type: string
+  transfer_type: TransferType
+}
+
+export enum TransferType {
+  'Income' = 'income',
+  'Expense' = 'expense'
 }

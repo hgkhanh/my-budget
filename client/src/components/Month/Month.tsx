@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
-import { Container, Button } from '@mui/material'
+import { Button, Container, Tab, Tabs } from '@mui/material'
 
-import { AnalyticsAPIResponse } from 'types'
+import { AnalyticsAPIResponse, TransferType } from 'types'
 import Overview from 'components/Overview'
 import CategoryInfo from 'components/CategoryInfo'
 import LoadingBox from 'components/LoadingBox'
@@ -16,6 +16,7 @@ const Month = () => {
   const [date, setDate] = useState(
     moment().set({ date: 1 }).subtract(1, 'month')
   )
+  const [activeTab, setActiveTab] = useState<TransferType>(TransferType.Income)
 
   useEffect(() => {
     if (date) {
@@ -56,14 +57,29 @@ const Month = () => {
           <>
             <Overview data={data.overview} />
             <MonthlyBarChart months={data.referenceMonths} />
+
+            <Tabs
+              value={activeTab}
+              onChange={(event, newValue) => setActiveTab(newValue)}
+              aria-label='transaction-list-tabs'
+              centered
+            >
+              <Tab
+                value={TransferType.Expense as string}
+                label='Expense'
+                wrapped
+              />
+              <Tab
+                value={TransferType.Income as string}
+                label='Income'
+                wrapped
+              />
+            </Tabs>
             <CategoryInfo
               isYearInfo={false}
-              categories={data.categories.expense}
+              categories={data.categories[activeTab]}
             />
-            <TransactionList
-              income={data.transactions.income}
-              expense={data.transactions.expense}
-            />
+            <TransactionList transactions={data.transactions[activeTab]} />
           </>
         )}
       </Container>
