@@ -35,6 +35,7 @@ const CategoryInfo = ({
     return (
       <>
         <h2>Categories</h2>
+        asdf
         <Grid container spacing={0} justifyContent='space-evenly'>
           <Grid item xs={12} sm={6}>
             <Grid container justifyContent='space-evenly'>
