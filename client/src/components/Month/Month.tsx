@@ -1,23 +1,14 @@
 import React, { useEffect, useState } from 'react'
-
-import {
-  Container,
-  Button,
-  BottomNavigation,
-  BottomNavigationAction,
-  Paper,
-  Box
-} from '@mui/material'
-import RestoreIcon from '@mui/icons-material/Restore'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import { AnalyticsAPIResponse } from 'types'
 import moment from 'moment'
-import Overview from '../Overview/Overview'
-import CategoryInfo from '../CategoryInfo/CategoryInfo'
-import { Link, useLocation } from 'react-router-dom'
-import LoadingBox from '../LoadingBox'
+import { Container, Button } from '@mui/material'
+
+import { AnalyticsAPIResponse } from 'types'
+import Overview from 'components/Overview'
+import CategoryInfo from 'components/CategoryInfo'
+import LoadingBox from 'components/LoadingBox'
 import TransactionList from 'components/TransactionList'
-import MonthlyBarChart from 'components/Year/components/MonthlyBarChart'
+import MonthlyBarChart from 'components/MonthlyBarChart'
+import Layout from 'components/Layout/Layout'
 
 const Month = () => {
   const [isLoading, setLoading] = useState(false)
@@ -25,7 +16,6 @@ const Month = () => {
   const [date, setDate] = useState(
     moment().set({ date: 1 }).subtract(1, 'month')
   )
-  const location = useLocation()
 
   useEffect(() => {
     if (date) {
@@ -48,57 +38,36 @@ const Month = () => {
   }, [date])
 
   return (
-    <Container fixed>
-      <h1>
-        {date.format('MMM')} {date.year()}
-      </h1>
-      <Button onClick={() => setDate(date.clone().subtract(1, 'month'))}>
-        Prev
-      </Button>
-      <Button onClick={() => setDate(date.clone().add(1, 'month'))}>
-        Next
-      </Button>
+    <Layout>
+      <Container fixed>
+        <h1>
+          {date.format('MMM')} {date.year()}
+        </h1>
+        <Button onClick={() => setDate(date.clone().subtract(1, 'month'))}>
+          Prev
+        </Button>
+        <Button onClick={() => setDate(date.clone().add(1, 'month'))}>
+          Next
+        </Button>
 
-      {isLoading || !data ? (
-        <LoadingBox />
-      ) : (
-        <>
-          <Overview data={data.overview} />
-          <MonthlyBarChart months={data.referenceMonths} />
-          <CategoryInfo
-            isYearInfo={false}
-            categories={data.categories.expense}
-          />
-          <TransactionList
-            income={data.transactions.income}
-            expense={data.transactions.expense}
-          />
-        </>
-      )}
-
-      <Box sx={{ mb: 8, mt: 8 }} />
-      <Paper
-        sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
-        elevation={3}
-      >
-        <BottomNavigation showLabels value={location.pathname}>
-          <BottomNavigationAction
-            component={Link}
-            to='/year'
-            label='Year'
-            value='/year'
-            icon={<RestoreIcon />}
-          />
-          <BottomNavigationAction
-            component={Link}
-            to='/'
-            label='Month'
-            value='/'
-            icon={<FavoriteIcon />}
-          />
-        </BottomNavigation>
-      </Paper>
-    </Container>
+        {isLoading || !data ? (
+          <LoadingBox />
+        ) : (
+          <>
+            <Overview data={data.overview} />
+            <MonthlyBarChart months={data.referenceMonths} />
+            <CategoryInfo
+              isYearInfo={false}
+              categories={data.categories.expense}
+            />
+            <TransactionList
+              income={data.transactions.income}
+              expense={data.transactions.expense}
+            />
+          </>
+        )}
+      </Container>
+    </Layout>
   )
 }
 
