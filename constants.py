@@ -2,7 +2,8 @@ expenses = [
     "Rents & Utilities", "Furniture & Appliances",
     "Service Bill & Insurance", "Groceries",
     "Work & Equipment", "Food & Drink", "Entertainment",
-    "Transportation", "Shopping", "Travel", "Friends & Family", "Others"
+    "Transportation", "Shopping", "Travel",
+    "Vacation", "Friends & Family", "Others"
 ]
 need_to_have_categories = [
     "Rents & Utilities", "Furniture & Appliances",
@@ -10,7 +11,7 @@ need_to_have_categories = [
 ]
 nice_to_have_categories = [
     "Work & Equipment", "Food & Drink", "Entertainment",
-    "Transportation", "Shopping", "Travel", "Others"
+    "Transportation", "Shopping", "Travel", "Vacation", "Others"
 ]
 
 months = [

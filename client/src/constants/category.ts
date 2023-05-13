@@ -10,7 +10,8 @@ import {
   purple,
   cyan,
   grey,
-  red
+  red,
+  blue
 } from '@mui/material/colors'
 
 interface CategoryConfig {
@@ -52,6 +53,9 @@ export const CATEGORY_CONFIG: CategoryConfig = {
   },
   'Friends & Family': {
     color: red['500']
+  },
+  'Vacation': {
+    color: blue['400']
   },
   Others: {
     color: grey['A400']
